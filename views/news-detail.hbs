@@ -1,0 +1,39 @@
+{{#if news}}
+<h5 class="card-title">{{news.title}}</h5>
+<h6 class="card-subtitle mb-2 text-muted">Автор:
+    {{news.author}}</h6>
+<div class="row">
+    <div class="col-lg-3">
+        <img src='http://localhost:3000{{news.cover}}' class="card-img-top" style="width: 100%; object-fit: cover;"
+            alt=''>
+    </div>
+    <div class="col-lg-6">
+        <p class="card-text">{{news.description}}</p>
+    </div>
+</div>
+
+<form action="/comments/api" method="post">
+    <label for="author">Автор</label>
+    <input name="author" id="author">
+    <label for="message">Комментарий</label>
+    <textarea name="message" id="message"></textarea>
+
+    <label for="title">Титульник</label>
+    <input name="title" id="title">
+
+    <label for="description">Описание</label>
+    <input name="description" id="description">
+
+    <input type="submit" value="Отправить">
+</form>
+
+{{#if comments}}
+{{#each comments}}
+{{/each}}
+<h1>{{this.author}}</h1>
+<h3>{{this.message}}</h3>
+{{else}}
+<h6>Список комментариев пуст</h6>
+{{/if}}
+
+{{/if}}

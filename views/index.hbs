@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>App</title>
+</head>
+
+<body>
+    <ul>
+        {{#each messages}}
+        <li>
+            {{#if this.author}}
+            <h1>{{this.author}}</h1>
+            {{else}}
+            Имени нет
+            {{/if}}
+            <h6>{{this.message}}</h6>
+            <a href="/hello">Ссылка</a>
+        </li>
+        {{/each}}
+    </ul>
+
+</body>
+
+</html>

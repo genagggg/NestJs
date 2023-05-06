@@ -1,0 +1,29 @@
+<h1>Описание новости</h1>
+<form method="post" action="/news/api">
+    <label for="titleInput">Заголовок</label>
+    <input name="title" id="titleInput">
+    <label for="descriptionInput">Описание</label>
+    <input name="description" id="descriptionInput">
+    <label for="authorInput">Описание</label>
+    <input name="author" id="authorInput">
+    <input type="submit" placeholder="Submit">
+    {{!-- <button onclick="sendForm()">Создать</button> --}}
+</form>
+{{!--
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function sendForm() {
+        var data = new FormData($('form')[0])
+        $.ajax({
+            url: '/news/api',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            success: function () {
+                alert('success')
+            }
+        })
+    }
+</script> --}}
