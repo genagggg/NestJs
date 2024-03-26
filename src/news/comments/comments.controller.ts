@@ -11,4 +11,5 @@ export class CommentsController {
         const idNewsInt = parseInt(idNews)
        return this.CommentsService.create(idNewsInt, comment)
     }
+    
 }
