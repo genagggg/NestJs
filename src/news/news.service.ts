@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Comment } from './comments/comments.service';
 
 export interface News {
   id?: number;
@@ -6,6 +7,7 @@ export interface News {
   description: string;
   author: string;
   countView?: number;
+  comments?: Comment[];
 }
 
 export interface NewsEdit {
@@ -16,7 +18,7 @@ export interface NewsEdit {
   countView?: number;
 }
 
-function getRandomInt(min: number, max: number) {
+export function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
@@ -30,6 +32,7 @@ export class NewsService {
       description: 'Коты милые',
       author: 'GG',
       countView: 7,
+      comments: []
     },
   ];
 
