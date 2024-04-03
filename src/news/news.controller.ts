@@ -27,6 +27,7 @@ export class NewsController {
       comments
     }
   }
+  
 
   @Get('/all')
   getAll(): News[] {
