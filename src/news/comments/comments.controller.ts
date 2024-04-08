@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { Comment } from './comments.service';
 
@@ -13,5 +13,9 @@ export class CommentsController {
     }
     
     
-    
+    @Get('/:idNews')
+    find(@Param("idNews") idNews: string){
+        const idNewsInt = parseInt(idNews)
+        return this.CommentsService.find(idNewsInt)
+    }
 }

@@ -22,7 +22,7 @@ export class CommentsService {
     return 'Комментарий был создан';
   }
 
-  find(idNews: number): Comment[] | undefined {
-    return this.comments[idNews] || undefined;
+  find(idNews: number): Comment[] | null {
+    return this.comments[idNews] || null;
   }
 }
