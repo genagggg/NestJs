@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { getRandomInt } from '../news.service';
 
 export type Comment = {
   id?: number;
@@ -8,20 +9,20 @@ export type Comment = {
 
 @Injectable()
 export class CommentsService {
-  private readonly comments = {
-    1: [],
-    66271: [{ id: 1, message: 'Сообщение', author: 'Vlad' }],
-  };
+  private readonly comments = {};
 
   create(idNews: number, comment: Comment) {
     if (!this.comments[idNews]) {
       this.comments[idNews] = [];
     }
-    this.comments[idNews].push(comment);
-    return comment
+    this.comments[idNews].push({
+      ...comment,
+      id: getRandomInt(),
+    });
+    return 'Комментарий был создан';
   }
 
-  find(idNews: number): Comment[] | undefined{
-return this.comments[idNews] || undefined
+  find(idNews: number): Comment[] | undefined {
+    return this.comments[idNews] || undefined;
   }
 }
