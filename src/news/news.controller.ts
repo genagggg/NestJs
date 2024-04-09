@@ -17,7 +17,7 @@ export class NewsController {
     private readonly commentService: CommentsService,
   ) {}
 
-  @Get('/detail/:id')
+  @Get('/api/detail/:id')
   get(@Param('id') id: string): News {
     const idInt = parseInt(id);
     const news = this.newsService.find(idInt);
@@ -29,27 +29,35 @@ export class NewsController {
   }
   
 
-  @Get('/all')
+  @Get('/api/all')
   getAll(): News[] {
     const news = this.newsService.getAll();
     return news;
   }
 
-  @Post()
+  @Post('/api')
   create(@Body() news: News) {
     return this.newsService.create(news);
   }
 
-  @Put('/:id')
+  @Put('/api/:id')
   edit(@Param('id') id: string, @Body() news: NewsEdit): News {
     const idInt = parseInt(id);
     return this.newsService.edit(idInt, news);
   }
 
-  @Delete('/:id')
+  @Delete('/api/:id')
   remove(@Param('id') id: string): string {
     const idInt = parseInt(id);
     const isRemoves = this.newsService.remove(idInt);
     return isRemoves ? 'Новость у далена' : 'Передан неверный индентификатор';
+  }
+
+  @Get('/all')
+  getAllView(){
+    const news = this.newsService.getAll()
+    let html =''
+    for()
+return 
   }
 }
