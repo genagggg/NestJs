@@ -7,6 +7,7 @@ export interface News {
   description: string;
   author: string;
   countView?: number;
+  cover?: string;
   comments?: Comment[];
 }
 
@@ -16,6 +17,7 @@ export interface NewsEdit {
   description?: string;
   author?: string;
   countView?: number;
+  
 }
 
 export function getRandomInt(min = 0, max = 9999) {
@@ -32,7 +34,9 @@ export class NewsService {
       description: 'Коты милые',
       author: 'GG',
       countView: 7,
-      comments: []
+      comments: [],
+      cover: 'https://gas-kvas.com/grafic/uploads/posts/2023-09/1695826323_gas-kvas-com-p-kartinki-s-kotikami-30.jpg'
+      
     },
   ];
 

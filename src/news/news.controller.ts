@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { News, NewsEdit, NewsService } from './news.service';
 import { CommentsService } from './comments/comments.service';
+import { renderNewsAll } from 'src/views/news/news-all';
+import { renderTemplate } from 'src/views/template';
 
 @Controller('news')
 export class NewsController {
@@ -55,16 +57,7 @@ export class NewsController {
   @Get('/all')
   getAllView() {
     const news = this.newsService.getAll();
-    let html = '';
-    for (let i = 0; i < news.length; i++) {
-      html += `
-      <div>
-      <div>${news[i].title}</div>
-      <div>${news[i].description}</div>
-      <div>${news[i].author}</div>
-      </div>
-      `;
-    }
-    return html;
+    const content = renderNewsAll(news)
+    return renderTemplate(content,{title:'Список новостей', description: 'Самые крутые новости на свете' })
   }
 }
