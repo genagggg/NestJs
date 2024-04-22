@@ -7,6 +7,12 @@ export type Comment = {
   author: string;
 };
 
+export type CommentEdit = {
+  id?: number;
+  message?: string;
+  author?: string;
+}
+
 @Injectable()
 export class CommentsService {
   private readonly comments = {};
@@ -20,6 +26,10 @@ export class CommentsService {
       id: getRandomInt(),
     });
     return 'Комментарий был создан';
+  }
+
+  edit(idNews: number, idComment: number, comment: CommentEdit){
+
   }
 
   find(idNews: number): Comment[] | null {
