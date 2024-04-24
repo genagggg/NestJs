@@ -25,11 +25,19 @@ export class CommentsService {
       ...comment,
       id: getRandomInt(),
     });
-    return 'Комментарий был создан';
+    console.log(this.comments)
+    return `Комментарий был создан${this.comments}`;
   }
 
   edit(idNews: number, idComment: number, comment: CommentEdit){
-
+    const indexComment = this.comments[idNews].findIndex((c)=> c.id === idComment)===-1
+if(!this.comments[idNews] || indexComment){
+  return false
+}
+this.comments[idNews][indexComment] = {
+  ...this.comments[idNews][idComment],
+  comment
+}
   }
 
   find(idNews: number): Comment[] | null {

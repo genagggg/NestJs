@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CommentEdit, CommentsService } from './comments.service';
 import { Comment } from './comments.service';
 
@@ -13,10 +21,14 @@ export class CommentsController {
   }
 
   @Put('/api/:idNews/:idComment')
-  edit(@Param('idNews')idNews: string, @Param('idComment') idComment: string, @Body() comment: CommentEdit){
-const idNewsInt = parseInt(idNews);
-const idCommentInt = parseInt(idComment);
-return this.CommentsService.edit(idNewsInt, idCommentInt, comment)
+  edit(
+    @Param('idNews') idNews: string,
+    @Param('idComment') idComment: string,
+    @Body() comment: CommentEdit,
+  ) {
+    const idNewsInt = parseInt(idNews);
+    const idCommentInt = parseInt(idComment);
+    return this.CommentsService.edit(idNewsInt, idCommentInt, comment);
   }
 
   @Get('/api/details/:idNews')
@@ -33,6 +45,5 @@ return this.CommentsService.edit(idNewsInt, idCommentInt, comment)
     const idNewsInt = parseInt(idNews);
     const idCommentsInt = parseInt(idComments);
     return this.CommentsService.remove(idNewsInt, idCommentsInt);
-    
   }
 }

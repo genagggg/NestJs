@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Res,
 } from '@nestjs/common';
 import { News, NewsEdit, NewsService } from './news.service';
 import { CommentsService } from './comments/comments.service';
 import { renderNewsAll } from 'src/views/news/news-all';
 import { renderTemplate } from 'src/views/template';
+import { renderNewsDetail } from 'src/views/news/news-detail';
 
 @Controller('news')
 export class NewsController {
@@ -36,6 +38,18 @@ export class NewsController {
     return news;
   }
 
+  @Get('/detail/:id')
+  getDetailView(@Param('id') id: string) {
+    const inInt = parseInt(id);
+    const news = this.newsService.find(inInt);
+    const content = renderNewsDetail(news);
+    return renderTemplate(content, {
+      title: news.title,
+      description: news.description,
+    });
+
+  }
+
   @Post('/api')
   create(@Body() news: News) {
     return this.newsService.create(news);
@@ -57,7 +71,10 @@ export class NewsController {
   @Get('/all')
   getAllView() {
     const news = this.newsService.getAll();
-    const content = renderNewsAll(news)
-    return renderTemplate(content,{title:'Список новостей', description: 'Самые крутые новости на свете' })
+    const content = renderNewsAll(news);
+    return renderTemplate(content, {
+      title: 'Список новостей',
+      description: 'Самые крутые новости на свете',
+    });
   }
 }
