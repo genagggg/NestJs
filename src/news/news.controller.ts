@@ -13,6 +13,7 @@ import { CommentsService } from './comments/comments.service';
 import { renderNewsAll } from 'src/views/news/news-all';
 import { renderTemplate } from 'src/views/template';
 import { renderNewsDetail } from 'src/views/news/news-detail';
+import { CreateNewsDto } from './dtos/create-news-dto';
 
 @Controller('news')
 export class NewsController {
@@ -42,7 +43,8 @@ export class NewsController {
   getDetailView(@Param('id') id: string) {
     const inInt = parseInt(id);
     const news = this.newsService.find(inInt);
-    const content = renderNewsDetail(news);
+    const comment = this.commentService.find(inInt)
+    const content = renderNewsDetail(news, comment);
     return renderTemplate(content, {
       title: news.title,
       description: news.description,
@@ -51,7 +53,7 @@ export class NewsController {
   }
 
   @Post('/api')
-  create(@Body() news: News) {
+  create(@Body() news: CreateNewsDto) {
     return this.newsService.create(news);
   }
 
