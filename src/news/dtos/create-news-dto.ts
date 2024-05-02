@@ -1,15 +1,17 @@
-import { IsNotEmpty } from "class-validator";
-
+import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
 
 export class CreateNewsDto {
   @IsNotEmpty()
-   title: string;
+  @IsString()
+  title: string;
   @IsNotEmpty()
+  @IsString()
   description: string;
   @IsNotEmpty()
+  @IsString()
   author: string;
-
-  countView?: number;
-
-  cover?: string;
+  @ValidateIf((o) => o !== undefined)
+  countView: number;
+  @ValidateIf((o) => o !== undefined)
+  cover: string;
 }

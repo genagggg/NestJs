@@ -1,14 +1,16 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, ValidateIf } from 'class-validator';
 
-export class CreateEditDto {
+export class EditNewsDto {
+  id: number;
+  @ValidateIf((o) => o !== undefined)
   @IsString()
   title: string;
-  @IsString()
+  @ValidateIf((o) => o !== undefined)
   description: string;
-  @IsString()
+  @ValidateIf((o) => o !== undefined)
   author: string;
-  @IsNumber()
-  countView?: number;
-  @IsNumber()
-  cover?: string;
+  @ValidateIf((o) => o !== undefined)
+  countView: number;
+  @ValidateIf((o) => o !== undefined)
+  cover: string;
 }

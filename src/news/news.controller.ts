@@ -6,14 +6,17 @@ import {
   Param,
   Post,
   Put,
-  Res,
+  UseInterceptors,
 } from '@nestjs/common';
-import { News, NewsEdit, NewsService } from './news.service';
+import { News, NewsService } from './news.service';
 import { CommentsService } from './comments/comments.service';
 import { renderNewsAll } from 'src/views/news/news-all';
 import { renderTemplate } from 'src/views/template';
 import { renderNewsDetail } from 'src/views/news/news-detail';
 import { CreateNewsDto } from './dtos/create-news-dto';
+import { EditNewsDto } from './dtos/edit-news-dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('news')
 export class NewsController {
@@ -43,22 +46,29 @@ export class NewsController {
   getDetailView(@Param('id') id: string) {
     const inInt = parseInt(id);
     const news = this.newsService.find(inInt);
-    const comment = this.commentService.find(inInt)
+    const comment = this.commentService.find(inInt);
     const content = renderNewsDetail(news, comment);
     return renderTemplate(content, {
       title: news.title,
       description: news.description,
     });
-
   }
 
   @Post('/api')
+  @UseInterceptors(
+    FilesInterceptor('cover', {
+      storage: diskStorage({
+        destination: HelperFileLoader.destinationPath,
+        filename: HelperFileLoader.customFileName,
+      }),
+    }),
+  )
   create(@Body() news: CreateNewsDto) {
     return this.newsService.create(news);
   }
 
   @Put('/api/:id')
-  edit(@Param('id') id: string, @Body() news: NewsEdit): News {
+  edit(@Param('id') id: string, @Body() news: EditNewsDto): News {
     const idInt = parseInt(id);
     return this.newsService.edit(idInt, news);
   }
