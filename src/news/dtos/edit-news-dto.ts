@@ -1,16 +1,28 @@
-import { IsString, ValidateIf } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, ValidateIf } from 'class-validator';
 
 export class EditNewsDto {
   id: number;
-  @ValidateIf((o) => o !== undefined)
+
   @IsString()
+  @IsNotEmpty()
+  @ValidateIf((o) => o.title)
   title: string;
-  @ValidateIf((o) => o !== undefined)
+
+  @IsString()
+  @IsNotEmpty()
+  @ValidateIf((o) => o.description)
   description: string;
-  @ValidateIf((o) => o !== undefined)
+
+  @IsString()
+  @IsNotEmpty()
+  @ValidateIf((o) => o.author)
   author: string;
-  @ValidateIf((o) => o !== undefined)
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ValidateIf((o) => o.countView || o.countView === '')
   countView: number;
-  @ValidateIf((o) => o !== undefined)
+
+  @ValidateIf((o) => o.cover)
   cover: string;
 }
