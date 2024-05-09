@@ -9,13 +9,14 @@ import {
 } from '@nestjs/common';
 import { CommentEdit, CommentsService } from './comments.service';
 import { Comment } from './comments.service';
+import { CreateCommentsDto } from './dtos/create-comments-dto';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly CommentsService: CommentsService) {}
 
   @Post('/api/:idNews')
-  create(@Param('idNews') idNews: string, @Body() comment: Comment) {
+  create(@Param('idNews') idNews: string, @Body() comment: CreateCommentsDto) {
     const idNewsInt = parseInt(idNews);
     return this.CommentsService.create(idNewsInt, comment);
   }
