@@ -30,14 +30,15 @@ export class CommentsService {
   }
 
   edit(idNews: number, idComment: number, comment: CommentEdit){
-    const indexComment = this.comments[idNews].findIndex((c)=> c.id === idComment)===-1
-if(!this.comments[idNews] || indexComment){
+    const indexComment = this.comments[idNews].findIndex((c)=> c.id === idComment)
+if(!this.comments[idNews] || indexComment === -1){
   return false
 }
 this.comments[idNews][indexComment] = {
   ...this.comments[idNews][idComment],
-  comment
+  ...comment,
 }
+return this.comments[idNews][indexComment]
   }
 
   find(idNews: number): Comment[] | null {

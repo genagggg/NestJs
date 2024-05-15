@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Render,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -100,5 +101,17 @@ export class NewsController {
       title: 'Список новостей',
       description: 'Самые крутые новости на свете',
     });
+  }
+
+  @Get('/hbs')
+  @Render('index')
+  root(){
+    return {
+      messages:[{message: 'myau', author: 'Bob Dilan'},
+    {message: 'ttt', author: 'Bo lan'},
+    {message: 'kkk', author: 'Bo Di'},
+    ],
+    name: 'Kolya'
+  }
   }
 }

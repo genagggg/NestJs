@@ -10,6 +10,7 @@ import {
 import { CommentEdit, CommentsService } from './comments.service';
 import { Comment } from './comments.service';
 import { CreateCommentsDto } from './dtos/create-comments-dto';
+import { EditCommentDto } from './dtos/edit-comments-dto';
 
 @Controller('comments')
 export class CommentsController {
@@ -25,7 +26,7 @@ export class CommentsController {
   edit(
     @Param('idNews') idNews: string,
     @Param('idComment') idComment: string,
-    @Body() comment: CommentEdit,
+    @Body() comment: EditCommentDto,
   ) {
     const idNewsInt = parseInt(idNews);
     const idCommentInt = parseInt(idComment);
