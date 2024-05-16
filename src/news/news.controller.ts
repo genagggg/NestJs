@@ -20,6 +20,7 @@ import { EditNewsDto } from './dtos/edit-news-dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { HelperFileLoader } from 'src/utils/HelperFileLoader';
+import { NewsEntity } from './news.entity';
 
 const PATH_NEWS ='/news-static/';
 HelperFileLoader.path = PATH_NEWS;
@@ -69,15 +70,9 @@ export class NewsController {
       }),
     }),
   )
-  create(@Body() news: CreateNewsDto, @UploadedFile() cover: Express.Multer.File):News {
-    let coverPath;
-    if(cover[0]?.filename?.length > 0) {
-    coverPath = PATH_NEWS + cover[0].filename;
-    }
-    return this.newsService.create({
-    ...news,
-    cover: coverPath,
-    });
+  async create(@Body() news: CreateNewsDto):Promise<NewsEntity> {
+   
+    return await this.newsService.create(news);
   }
 
   @Put('/api/:id')

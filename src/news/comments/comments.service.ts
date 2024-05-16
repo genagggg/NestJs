@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { getRandomInt } from '../news.service';
+//import { getRandomInt } from '../news.service';
 
 export type Comment = {
   id?: number;
@@ -23,7 +23,7 @@ export class CommentsService {
     }
     this.comments[idNews].push({
       ...comment,
-      id: getRandomInt(),
+     // id: getRandomInt(),
     });
     console.log(this.comments)
     return `Комментарий был создан${this.comments}`;

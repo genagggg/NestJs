@@ -13,9 +13,9 @@ export class CreateNewsDto {
   @IsString()
   author: string;
 
-  @ValidateIf((o) => o.countView || o.countView === '')
-  countView: number;
+  // @ValidateIf((o) => o.countView || o.countView === '')
+  // countView: number;
 
-  @ValidateIf((o) => o !== undefined)
-  cover: string;
+  // @ValidateIf((o) => o !== undefined)
+  // cover: string;
 }

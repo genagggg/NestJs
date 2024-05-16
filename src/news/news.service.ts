@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Comment } from './comments/comments.service';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { NewsEntity } from './news.entity';
 export interface News {
   id?: number;
   title: string;
@@ -20,36 +22,13 @@ export interface NewsEdit {
   
 }
 
-export function getRandomInt(min = 0, max = 9999) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
-}
 @Injectable()
 export class NewsService {
-  private readonly news: News[] = [
-    {
-      id: 1,
-      title: 'Новость про котов',
-      description: 'Коты милые',
-      author: 'GG',
-      countView: 7,
-      comments: [],
-      cover: 'https://gas-kvas.com/grafic/uploads/posts/2023-09/1695826323_gas-kvas-com-p-kartinki-s-kotikami-30.jpg'
-      
-    },
-  ];
+  constructor(  @InjectRepository(NewsEntity)
+  private newsRepository: Repository<NewsEntity>,){}
 
-  create(news: News): News | undefined {
-    const id = getRandomInt(0, 99999);
-    console.log(id);
-    const finalNews = {
-      ...news,
-      id: id,
-    };
-    console.log(id);
-    this.news.push(finalNews);
-    return finalNews;
+  async create(news: News):Promise<NewsEntity> {
+  return await this.newsRepository.save(news)
   }
 
   find(id: News['id']): News | undefined {
