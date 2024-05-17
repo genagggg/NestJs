@@ -33,33 +33,27 @@ export class NewsController {
   ) {}
 
   @Get('/api/detail/:id')
-  get(@Param('id') id: string): News {
+  async get(@Param('id') id: string) {
     const idInt = parseInt(id);
-    const news = this.newsService.find(idInt);
-    const comments = this.commentService.find(idInt);
-    return {
-      ...news,
-      comments,
-    };
+    return await this.newsService.find(idInt);
   }
 
   @Get('/api/all')
-  getAll(): News[] {
-    const news = this.newsService.getAll();
-    return news;
+  getAll() {
+    return this.newsService.getAllAuthor();
   }
 
-  @Get('/detail/:id')
-  getDetailView(@Param('id') id: string) {
-    const inInt = parseInt(id);
-    const news = this.newsService.find(inInt);
-    const comment = this.commentService.find(inInt);
-    const content = renderNewsDetail(news, comment);
-    return renderTemplate(content, {
-      title: news.title,
-      description: news.description,
-    });
-  }
+  // @Get('/detail/:id')
+  // getDetailView(@Param('id') id: string) {
+  //   const inInt = parseInt(id);
+  //   const news = this.newsService.find(inInt);
+  //   const comment = this.commentService.find(inInt);
+  //   const content = renderNewsDetail(news, comment);
+  //   return renderTemplate(content, {
+  //     title: news.title,
+  //     description: news.description,
+  //   });
+  // }
 
   @Post('/api')
   @UseInterceptors(
@@ -75,28 +69,28 @@ export class NewsController {
     return await this.newsService.create(news);
   }
 
-  @Put('/api/:id')
-  edit(@Param('id') id: string, @Body() news: EditNewsDto): News {
-    const idInt = parseInt(id);
-    return this.newsService.edit(idInt, news);
-  }
+  // @Put('/api/:id')
+  // edit(@Param('id') id: string, @Body() news: EditNewsDto): News {
+  //   const idInt = parseInt(id);
+  //   return this.newsService.edit(idInt, news);
+  // }
 
   @Delete('/api/:id')
-  remove(@Param('id') id: string): string {
+  async remove(@Param('id') id: string) {
     const idInt = parseInt(id);
     const isRemoves = this.newsService.remove(idInt);
-    return isRemoves ? 'Новость у далена' : 'Передан неверный индентификатор';
+    return await isRemoves ? 'Новость удалена' : 'Передан неверный индентификатор';
   }
 
-  @Get('/all')
-  getAllView() {
-    const news = this.newsService.getAll();
-    const content = renderNewsAll(news);
-    return renderTemplate(content, {
-      title: 'Список новостей',
-      description: 'Самые крутые новости на свете',
-    });
-  }
+  // @Get('/all')
+  // getAllView() {
+  //   const news = this.newsService.getAll();
+  //   const content = renderNewsAll(news);
+  //   return renderTemplate(content, {
+  //     title: 'Список новостей',
+  //     description: 'Самые крутые новости на свете',
+  //   });
+  // }
 
   @Get('/hbs')
   @Render('index')

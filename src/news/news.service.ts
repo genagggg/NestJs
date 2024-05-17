@@ -31,35 +31,39 @@ export class NewsService {
   return await this.newsRepository.save(news)
   }
 
-  find(id: News['id']): News | undefined {
-    return this.news.find((news) => {
-      return news.id === id;
-    });
+  async find(id: News['id']) {
+    return await this.newsRepository.findBy({id: id})
   }
 
-  getAll():News[]{
-    return this.news
+  async getAllAuthor():Promise<NewsEntity[]>{
+    return await this.newsRepository.find({
+      // select:{
+      //   author: true
+      // }
+      take: 10
+    })
   }
 
-  remove(id: News['id']): boolean {
-    const indexRemoveNews = this.news.findIndex((news) => news.id === id);
-    if (indexRemoveNews !== -1) {
-      this.news.splice(indexRemoveNews, 1);
-      return true;
+  async remove(id: News['id']) {
+    const findId = await this.newsRepository.findBy({id:id})
+    console.log(findId)
+     if (findId.length !== 0) {
+      this.newsRepository.delete({id: id})
+      return await true;
     }
-    return false;
+    return await false;
   }
 
-  edit(id: number, news: NewsEdit): News | undefined {
-    const indexEditNews = this.news.findIndex((news) => news.id === id);
+  // edit(id: number, news: NewsEdit): News | undefined {
+  //   const indexEditNews = this.news.findIndex((news) => news.id === id);
 
-    if (indexEditNews !== -1) {
-      this.news[indexEditNews] = {
-        ...this.news[indexEditNews],
-        ...news,
-      };
-      return this.news[indexEditNews];
-    }
-    return undefined
-  }
+  //   if (indexEditNews !== -1) {
+  //     this.news[indexEditNews] = {
+  //       ...this.news[indexEditNews],
+  //       ...news,
+  //     };
+  //     return this.news[indexEditNews];
+  //   }
+  //   return undefined
+  // }
 }
