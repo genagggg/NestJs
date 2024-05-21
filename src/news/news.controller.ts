@@ -40,20 +40,8 @@ export class NewsController {
 
   @Get('/api/all')
   getAll() {
-    return this.newsService.getAllAuthor();
+    return this.newsService.getAll();
   }
-
-  // @Get('/detail/:id')
-  // getDetailView(@Param('id') id: string) {
-  //   const inInt = parseInt(id);
-  //   const news = this.newsService.find(inInt);
-  //   const comment = this.commentService.find(inInt);
-  //   const content = renderNewsDetail(news, comment);
-  //   return renderTemplate(content, {
-  //     title: news.title,
-  //     description: news.description,
-  //   });
-  // }
 
   @Post('/api')
   @UseInterceptors(
@@ -69,11 +57,11 @@ export class NewsController {
     return await this.newsService.create(news);
   }
 
-  // @Put('/api/:id')
-  // edit(@Param('id') id: string, @Body() news: EditNewsDto): News {
-  //   const idInt = parseInt(id);
-  //   return this.newsService.edit(idInt, news);
-  // }
+  @Put('/api/:id')
+  async edit(@Param('id') id: string, @Body() news: EditNewsDto) {
+    const idInt = parseInt(id);
+    return await this.newsService.edit(idInt, news);
+  }
 
   @Delete('/api/:id')
   async remove(@Param('id') id: string) {
@@ -81,16 +69,6 @@ export class NewsController {
     const isRemoves = this.newsService.remove(idInt);
     return await isRemoves ? 'Новость удалена' : 'Передан неверный индентификатор';
   }
-
-  // @Get('/all')
-  // getAllView() {
-  //   const news = this.newsService.getAll();
-  //   const content = renderNewsAll(news);
-  //   return renderTemplate(content, {
-  //     title: 'Список новостей',
-  //     description: 'Самые крутые новости на свете',
-  //   });
-  // }
 
   @Get('/hbs')
   @Render('index')

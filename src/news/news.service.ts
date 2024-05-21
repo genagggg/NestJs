@@ -31,17 +31,12 @@ export class NewsService {
   return await this.newsRepository.save(news)
   }
 
-  async find(id: News['id']) {
+  async find(id: News['id']): Promise<NewsEntity[]> {
     return await this.newsRepository.findBy({id: id})
   }
 
-  async getAllAuthor():Promise<NewsEntity[]>{
-    return await this.newsRepository.find({
-      // select:{
-      //   author: true
-      // }
-      take: 10
-    })
+  async getAll():Promise<NewsEntity[]>{
+    return await this.newsRepository.find()
   }
 
   async remove(id: News['id']) {
@@ -54,16 +49,18 @@ export class NewsService {
     return await false;
   }
 
-  // edit(id: number, news: NewsEdit): News | undefined {
-  //   const indexEditNews = this.news.findIndex((news) => news.id === id);
+  async edit(id: number, news: NewsEdit): Promise<NewsEntity | null> {
+    const editableNews = await this.find(id)
+    if(editableNews){
+      const newsEntity = new NewsEntity()
+      newsEntity.id = news.id || editableNews[0].id
+      newsEntity.title = news.title || editableNews[0].title
+      newsEntity.description = news.description || editableNews[0].description
+      newsEntity.author = news.author || editableNews[0].author
 
-  //   if (indexEditNews !== -1) {
-  //     this.news[indexEditNews] = {
-  //       ...this.news[indexEditNews],
-  //       ...news,
-  //     };
-  //     return this.news[indexEditNews];
-  //   }
-  //   return undefined
-  // }
+      this.newsRepository.save({...newsEntity})
+   }
+ 
+   return null
+}
 }
