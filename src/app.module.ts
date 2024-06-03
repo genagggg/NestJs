@@ -9,6 +9,7 @@ import { NewsEntity } from './news/news.entity';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { UsersEntity } from './users/users.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersEntity } from './users/users.entity';
     }),
     NewsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,4 +15,10 @@ export class UsersService {
 async create(user){
 return this.usersRepositiry.save(user)
 }
+
+async findByEmail(email): Promise<UsersEntity>{
+  return await this.usersRepositiry.findOne({
+    where:[
+    {email: email}]})
+}
 }
