@@ -8,6 +8,7 @@ import {
   Put,
   Render,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { News, NewsService } from './news.service';
@@ -21,6 +22,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { HelperFileLoader } from 'src/utils/HelperFileLoader';
 import { NewsEntity } from './news.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 const PATH_NEWS ='/news-static/';
 HelperFileLoader.path = PATH_NEWS;
@@ -38,6 +40,7 @@ export class NewsController {
     return await this.newsService.find(idInt);
   }
 
+  @UseGuards(AuthGuard)
   @Get('/api/all')
   getAll() {
     return this.newsService.getAll();
