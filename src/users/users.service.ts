@@ -24,4 +24,9 @@ async findByEmail(email): Promise<UsersEntity>{
     where:[
     {email: email}]})
 }
+
+async findById(id): Promise<UsersEntity> {
+  return this.usersRepositiry.findOne( {where: {id:id}} );
+  }
+  
 }

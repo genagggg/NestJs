@@ -23,6 +23,8 @@ import { diskStorage } from 'multer';
 import { HelperFileLoader } from 'src/utils/HelperFileLoader';
 import { NewsEntity } from './news.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/users/role/roles.decorator';
+import { Role } from 'src/users/role/role.enum';
 
 const PATH_NEWS ='/news-static/';
 HelperFileLoader.path = PATH_NEWS;
@@ -41,6 +43,7 @@ export class NewsController {
   }
 
   @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
   @Get('/api/all')
   getAll() {
     return this.newsService.getAll();
